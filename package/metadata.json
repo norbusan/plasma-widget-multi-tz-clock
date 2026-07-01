@@ -1,0 +1,20 @@
+{
+    "KPackageStructure": "Plasma/Applet",
+    "KPlugin": {
+        "Authors": [
+            {
+                "Email": "norbert@preining.info",
+                "Name": "Norbert Preining"
+            }
+        ],
+        "Category": "Date and Time",
+        "Description": "Shows the current time and date for several time zones at once.",
+        "Icon": "clock",
+        "Id": "org.kde.plasma.multitzclock",
+        "License": "GPL-3.0-or-later",
+        "Name": "World Clock",
+        "Version": "1.0.0",
+        "Website": "https://github.com/norbusan/plasma-widget-world-clock"
+    },
+    "X-Plasma-API-Minimum-Version": "6.0"
+}
