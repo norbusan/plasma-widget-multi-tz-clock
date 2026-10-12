@@ -80,8 +80,10 @@ var codes = {
     "Europe/Vienna": "VIE", "Europe/Warsaw": "WAW", "Europe/Zurich": "ZRH"
 };
 
-function code(id) {
-    if (codes[id])
+// Short code for a zone: the airport-style code when useAirportCode is set and
+// one is known, otherwise the first three letters of the city name.
+function code(id, useAirportCode) {
+    if (useAirportCode && codes[id])
         return codes[id];
     // Fall back to the first letters of the trailing city component.
     var parts = String(id).split("/");

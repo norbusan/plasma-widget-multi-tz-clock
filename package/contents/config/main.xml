@@ -41,5 +41,10 @@
         <entry name="fontBold" type="Bool">
             <default>false</default>
         </entry>
+        <!-- Zones (from timeZones) that show their airport-style code, e.g.
+             "NYC"; all other zones show the first three letters of the city. -->
+        <entry name="airportCodeZones" type="StringList">
+            <default>America/New_York,Europe/London,Asia/Tokyo</default>
+        </entry>
     </group>
 </kcfg>

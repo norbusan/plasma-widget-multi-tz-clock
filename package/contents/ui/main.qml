@@ -21,6 +21,7 @@ PlasmoidItem {
     readonly property bool showDate: plasmoid.configuration.showDate
     readonly property bool showOffset: plasmoid.configuration.showOffset
     readonly property bool showWeekday: plasmoid.configuration.showWeekday
+    readonly property var airportCodeZones: plasmoid.configuration.airportCodeZones
 
     readonly property string fontFamily: plasmoid.configuration.fontFamily || Kirigami.Theme.defaultFont.family
     readonly property bool fontBold: plasmoid.configuration.fontBold
@@ -181,7 +182,7 @@ PlasmoidItem {
             var f = codeFm.font.pixelSize + codeFm.font.family.length + (codeFm.font.bold ? 1 : 0);
             var w = 0;
             for (var i = 0; i < root.rowZones.length; i++)
-                w = Math.max(w, codeFm.advanceWidth(TZ.code(root.rowZones[i])));
+                w = Math.max(w, codeFm.advanceWidth(TZ.code(root.rowZones[i], root.airportCodeZones.indexOf(root.rowZones[i]) !== -1)));
             return w;
         }
 
@@ -235,7 +236,7 @@ PlasmoidItem {
                     spacing: Kirigami.Units.largeSpacing
 
                     PlasmaComponents3.Label {
-                        text: TZ.code(modelData)
+                        text: TZ.code(modelData, root.airportCodeZones.indexOf(modelData) !== -1)
                         font.family: root.fontFamily
                         font.bold: true
                         font.pixelSize: fullRep.rowPx()

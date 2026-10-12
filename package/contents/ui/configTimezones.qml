@@ -16,6 +16,9 @@ KCM.SimpleKCM {
     // marks the setting dirty so it gets saved.
     property var cfg_timeZones: []
     property var cfg_timeZonesDefault: ["Local", "America/New_York", "Europe/London", "Asia/Tokyo"]
+    // Zones that show their airport code instead of the city's first letters.
+    property var cfg_airportCodeZones: []
+    property var cfg_airportCodeZonesDefault: ["America/New_York", "Europe/London", "Asia/Tokyo"]
 
     function move(from, to) {
         if (to < 0 || to >= cfg_timeZones.length)
@@ -27,9 +30,17 @@ KCM.SimpleKCM {
     }
 
     function remove(index) {
+        setAirportCode(cfg_timeZones[index], false);
         var arr = cfg_timeZones.slice();
         arr.splice(index, 1);
         cfg_timeZones = arr;
+    }
+
+    function setAirportCode(id, on) {
+        var arr = cfg_airportCodeZones.filter(function (z) { return z !== id; });
+        if (on)
+            arr.push(id);
+        cfg_airportCodeZones = arr;
     }
 
     function add(id) {
@@ -69,6 +80,16 @@ KCM.SimpleKCM {
                         Layout.fillWidth: true
                         text: TZ.label(modelData)
                         elide: Text.ElideRight
+                    }
+                    QQC2.CheckBox {
+                        text: i18n("Airport code")
+                        // Only zones with a known airport code can use one.
+                        enabled: TZ.codes[modelData] !== undefined
+                        checked: page.cfg_airportCodeZones.indexOf(modelData) !== -1
+                        QQC2.ToolTip.text: i18n("Show %1 instead of %2",
+                                                TZ.code(modelData, true), TZ.code(modelData, false))
+                        QQC2.ToolTip.visible: hovered && enabled
+                        onToggled: page.setAirportCode(modelData, checked)
                     }
                     QQC2.ToolButton {
                         icon.name: "go-up"
