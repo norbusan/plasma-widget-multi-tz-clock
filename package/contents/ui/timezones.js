@@ -1,46 +1,9 @@
 /*
- * A curated list of IANA time-zone identifiers offered in the picker.
+ * Display helpers for IANA time-zone ids. The list of selectable zones comes
+ * from the Plasma "time" engine (see configTimezones.qml).
  * SPDX-License-Identifier: GPL-3.0-or-later
- *
- * This is intentionally a static, dependency-free list: Plasma's QML engine
- * does not expose Intl.supportedValuesOf(), so we ship the common zones here.
  */
 .pragma library
-
-var zones = [
-    "Local",
-    "UTC",
-    // Africa
-    "Africa/Abidjan", "Africa/Accra", "Africa/Addis_Ababa", "Africa/Algiers",
-    "Africa/Cairo", "Africa/Casablanca", "Africa/Johannesburg", "Africa/Lagos",
-    "Africa/Nairobi", "Africa/Tunis",
-    // America
-    "America/Anchorage", "America/Argentina/Buenos_Aires", "America/Bogota",
-    "America/Caracas", "America/Chicago", "America/Denver", "America/Halifax",
-    "America/Havana", "America/Lima", "America/Los_Angeles", "America/Mexico_City",
-    "America/New_York", "America/Phoenix", "America/Santiago", "America/Sao_Paulo",
-    "America/St_Johns", "America/Toronto", "America/Vancouver",
-    // Asia
-    "Asia/Almaty", "Asia/Baghdad", "Asia/Bangkok", "Asia/Beirut", "Asia/Colombo",
-    "Asia/Dhaka", "Asia/Dubai", "Asia/Hong_Kong", "Asia/Jakarta", "Asia/Jerusalem",
-    "Asia/Kabul", "Asia/Karachi", "Asia/Kathmandu", "Asia/Kolkata",
-    "Asia/Kuala_Lumpur", "Asia/Manila", "Asia/Riyadh", "Asia/Seoul",
-    "Asia/Shanghai", "Asia/Singapore", "Asia/Taipei", "Asia/Tehran",
-    "Asia/Tokyo", "Asia/Yangon", "Asia/Yekaterinburg",
-    // Atlantic
-    "Atlantic/Azores", "Atlantic/Cape_Verde", "Atlantic/Reykjavik",
-    // Australia / Pacific
-    "Australia/Adelaide", "Australia/Brisbane", "Australia/Darwin",
-    "Australia/Perth", "Australia/Sydney", "Pacific/Auckland", "Pacific/Fiji",
-    "Pacific/Guam", "Pacific/Honolulu", "Pacific/Pago_Pago", "Pacific/Port_Moresby",
-    // Europe
-    "Europe/Amsterdam", "Europe/Athens", "Europe/Belgrade", "Europe/Berlin",
-    "Europe/Brussels", "Europe/Bucharest", "Europe/Budapest", "Europe/Copenhagen",
-    "Europe/Dublin", "Europe/Helsinki", "Europe/Istanbul", "Europe/Kyiv",
-    "Europe/Lisbon", "Europe/London", "Europe/Madrid", "Europe/Moscow",
-    "Europe/Oslo", "Europe/Paris", "Europe/Prague", "Europe/Rome",
-    "Europe/Stockholm", "Europe/Vienna", "Europe/Warsaw", "Europe/Zurich"
-];
 
 // Short, recognizable city/airport-style code shown in each row.
 var codes = {

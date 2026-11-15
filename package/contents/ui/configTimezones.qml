@@ -6,10 +6,17 @@ import QtQuick.Controls as QQC2
 import QtQuick.Layouts
 import org.kde.kcmutils as KCM
 import org.kde.kirigami as Kirigami
+import org.kde.plasma.plasma5support as P5Support
 import "timezones.js" as TZ
 
 KCM.SimpleKCM {
     id: page
+
+    // The "time" engine lists every zone the system knows (QTimeZone ids).
+    P5Support.DataSource {
+        id: timeSource
+        engine: "time"
+    }
 
     // Bound two-way to the "timeZones" KConfigXT StringList entry. The dialog
     // hands us a JS array; reassigning it (never mutating in place) is what
@@ -123,12 +130,16 @@ KCM.SimpleKCM {
                 id: picker
                 Layout.fillWidth: true
                 editable: true
-                model: TZ.zones
+                // Region/City ids only; drops legacy aliases like "Japan" or "PRC".
+                model: ["Local", "UTC"].concat(timeSource.sources.filter(function (s) {
+                    return s.indexOf("/") !== -1;
+                }))
 
-                // Show friendly labels in the dropdown.
-                delegate: QQC2.ItemDelegate {
-                    width: picker.width
+                // Show friendly labels in the dropdown. Must be a MenuItem: the
+                // desktop style's popup is a Menu, which overprints other types.
+                delegate: QQC2.MenuItem {
                     required property string modelData
+                    required property int index
                     text: TZ.label(modelData)
                     highlighted: picker.highlightedIndex === index
                 }
@@ -141,9 +152,11 @@ KCM.SimpleKCM {
                 icon.name: "list-add"
                 text: i18n("Add")
                 onClicked: {
-                    var id = picker.currentIndex >= 0 ? picker.model[picker.currentIndex]
-                                                      : picker.editText.trim();
-                    page.add(id);
+                    // editText holds either the picked or the typed id; the
+                    // stale currentIndex would ignore typed input.
+                    var id = picker.editText.trim();
+                    if (picker.model.indexOf(id) !== -1)
+                        page.add(id);
                 }
             }
         }
